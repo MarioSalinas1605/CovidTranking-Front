@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID 19</title>
+    <style>
+        body {
+            margin: 0;
+        } 
+        .map {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+   <div id="map" class="map"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7HTcorK-kiKDA5HTaUrvvsyapZ-DnmaE"></script>
+    <script>
+        const map = document.querySelector('#map')
+        new window.google.maps.Map(map, {
+            center: { lat: 0, lng: 0 },
+            zoom: 3
+        })
+    </script>
+</body>
+</html>
