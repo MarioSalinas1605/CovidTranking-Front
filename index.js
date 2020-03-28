@@ -1,8 +1,12 @@
+import mapStyles from './map-styles.js'
+
 const $map = document.querySelector('#map')
 const map = new window.google.maps.Map($map, {
-    center: { lat: 0, lng: 0 },
-    zoom: 2
+    center: { lat: 20, lng: 0 },
+    zoom: 2.2,
+    styles: mapStyles
 })
+const popup = new window.google.maps.InfoWindow()
 
 renderData()
 
@@ -17,9 +21,27 @@ async function renderData() {
     console.log(data);
 
     data.forEach(item => {
-        new window.google.maps.Marker({
-            position: { lat: item.location.lat, lng: item.location.lng },
-            map
-        })
+        if (item.confirmed) {
+            const marker = new window.google.maps.Marker({
+                position: { lat: item.location.lat, lng: item.location.lng },
+                map,
+                icon: './icon.png'
+            })
+            marker.addListener('click', () => {
+                popup.setContent(renderExtraData(item))
+                popup.open(map, marker)
+            })
+        }
     });
+}
+
+function renderExtraData({ confirmed, deaths, recovered, provincestate, countryregion}) {
+    return `
+    <div>
+        <p> <strong> ${provincestate} - ${countryregion} </strong> </p>
+        <p> Confirmados: ${confirmed} </p>
+        <p> Muertes: ${deaths}  </p>
+        <p> Recuperados: ${recovered} </p>
+    </div>
+    `
 }
